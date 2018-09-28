@@ -1,0 +1,27 @@
+steps:
+- script: sudo apt-get install -y debootstrap qemu-user-static
+  displayName: 'Installing debootstrap and QEMU'
+- script: sudo debootstrap --foreign --verbose --arch=$(DEBUILDER_ARCH) --variant=$(DEBUILDER_VARIANT) $(DEBUILDER_RELEASE) rootfs
+  displayName: 'Using debootstrap --foreign to create rootfs'
+- script: cd rootfs
+  displayName: Entering rootfs
+- script: sudo mount --bind /dev dev/
+  displayName: Mounting dev
+- script: sudo mount --bind /sys sys/
+  displayName: Mounting sys
+- script: sudo mount --bind /proc proc/
+  displayName: Mounting proc
+- script: sudo mount --bind /dev/pts dev/pts/
+  displayName: Mounting dev/pts
+- script: cd ..
+  displayName: Exiting chroot
+- script: sudo chmod +x rootfs/usr/bin/qemu-$(DEBUILDER_QEMU_ARCH)-static
+  displayName: Marking static [rootfs/usr/bin/qemu-$(DEBUILDER_QEMU_ARCH)-static] as executable
+- script: sudo chroot rootfs /debootstrap/debootstrap --second-stage --verbose
+  displayName: Manually setting up debootstrap
+- script: sudo rm rootfs/usr/bin/qemu-$(DEBUILDER_QEMU_ARCH)-static
+  displayName: Deleting QEMU from chroot
+- script: sudo chroot rootfs /debootstrap/debootstrap --second-stage --verbose
+  displayName: Manually setting up debootstrap
+- script: sudo tar -zcvf $(Build.BinariesDirectory)/debuilder_rootfs_$(DEBUILDER_RELEASE)_$(DEBUILDER_VARIANT)_$(DEBUILDER_ARCH).tar.gz rootfs
+  displayName: 'Compressing rootfs for $(DEBUILDER_RELEASE) $(DEBUILDER_VARIANT) $(DEBUILDER_ARCH)'
