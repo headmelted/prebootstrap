@@ -13,6 +13,8 @@ steps:
   displayName: Entering chroot to mount dev, sys, proc and dev/pts
 - script: sudo chmod +x rootfs/usr/bin/qemu-$(DEBUILDER_QEMU_ARCH)-static
   displayName: Marking static [rootfs/usr/bin/qemu-$(DEBUILDER_QEMU_ARCH)-static] as executable
+- script: ls rootfs
+  displayName: listing rootfs
 - script: sudo chroot rootfs /debootstrap/debootstrap --second-stage --verbose
   displayName: Manually setting up debootstrap
 - script: sudo rm rootfs/usr/bin/qemu-$(DEBUILDER_QEMU_ARCH)-static
