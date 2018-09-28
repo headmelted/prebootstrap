@@ -11,7 +11,7 @@ steps:
     sudo mount --bind /dev/pts dev/pts/
     cd ..;
   displayName: Entering chroot to mount dev, sys, proc and dev/pts
-- script: cp /usr/bin/qemu-$(DEBUILDER_QEMU_ARCH)-static rootfs/usr/bin/qemu-$(DEBUILDER_QEMU_ARCH)-static
+- script: sudo cp /usr/bin/qemu-$(DEBUILDER_QEMU_ARCH)-static rootfs/usr/bin/qemu-$(DEBUILDER_QEMU_ARCH)-static
   displayName: Copying QEMU into rootfs for debootstrap --second-stage
 - script: sudo chmod +x rootfs/usr/bin/qemu-$(DEBUILDER_QEMU_ARCH)-static
   displayName: Marking static [rootfs/usr/bin/qemu-$(DEBUILDER_QEMU_ARCH)-static] as executable
