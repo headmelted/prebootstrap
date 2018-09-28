@@ -1,3 +1,6 @@
+parameters:
+  arch: ''
+
 jobs:
 - job: ${{ parameters.arch }}
   pool:
