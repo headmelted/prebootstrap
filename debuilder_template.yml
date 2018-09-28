@@ -3,18 +3,14 @@ steps:
   displayName: 'Installing debootstrap and QEMU'
 - script: sudo debootstrap --foreign --verbose --arch=$(DEBUILDER_ARCH) --variant=$(DEBUILDER_VARIANT) $(DEBUILDER_RELEASE) rootfs
   displayName: 'Using debootstrap --foreign to create rootfs'
-- script: cd rootfs
-  displayName: Entering rootfs
-- script: sudo mount --bind /dev dev/
-  displayName: Mounting dev
-- script: sudo mount --bind /sys sys/
-  displayName: Mounting sys
-- script: sudo mount --bind /proc proc/
-  displayName: Mounting proc
-- script: sudo mount --bind /dev/pts dev/pts/
-  displayName: Mounting dev/pts
-- script: cd ..
-  displayName: Exiting chroot
+- script: |
+    cd rootfs;
+    sudo mount --bind /dev dev/
+    sudo mount --bind /sys sys/
+    sudo mount --bind /proc proc/
+    sudo mount --bind /dev/pts dev/pts/
+    cd ..;
+  displayName: Entering chroot to mount dev, sys, proc and dev/pts
 - script: sudo chmod +x rootfs/usr/bin/qemu-$(DEBUILDER_QEMU_ARCH)-static
   displayName: Marking static [rootfs/usr/bin/qemu-$(DEBUILDER_QEMU_ARCH)-static] as executable
 - script: sudo chroot rootfs /debootstrap/debootstrap --second-stage --verbose
