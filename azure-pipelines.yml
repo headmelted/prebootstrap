@@ -4,107 +4,97 @@
 # https://aka.ms/yaml
 
 jobs:
-- job: stretch_amd64
-  pool:
-   vmImage: 'Ubuntu 16.04'
-  variables:
-    DEBUILDER_RELEASE: stretch
-    DEBUILDER_VARIANT: minbase
-    DEBUILDER_ARCH: amd64
-    DEBUILDER_QEMU_ARCH: x86_64
-  steps:
-  - template: debuilder_template.yml
-- job: stretch_arm64
-  pool:
-   vmImage: 'Ubuntu 16.04'
-  variables:
-    DEBUILDER_RELEASE: stretch
-    DEBUILDER_VARIANT: minbase
-    DEBUILDER_ARCH: arm64
-    DEBUILDER_QEMU_ARCH: aarch64
-  steps:
-  - template: debuilder_template.yml
-- job: stretch_armel
-  pool:
-   vmImage: 'Ubuntu 16.04'
-  variables:
-    DEBUILDER_RELEASE: stretch
-    DEBUILDER_VARIANT: minbase
-    DEBUILDER_ARCH: armel
-    DEBUILDER_QEMU_ARCH: arm
-  steps:
-  - template: debuilder_template.yml
-- job: stretch_armhf
-  pool:
-   vmImage: 'Ubuntu 16.04'
-  variables:
-    DEBUILDER_RELEASE: stretch
-    DEBUILDER_VARIANT: minbase
-    DEBUILDER_ARCH: armhf
-    DEBUILDER_QEMU_ARCH: arm
-  steps:
-  - template: debuilder_template.yml
-- job: stretch_i386
-  pool:
-    vmImage: 'Ubuntu 16.04'
-  variables:
-    DEBUILDER_RELEASE: stretch
-    DEBUILDER_VARIANT: minbase
-    DEBUILDER_ARCH: i386
-    DEBUILDER_QEMU_ARCH: i386
-  steps:
-  - template: debuilder_template.yml
-- job: stretch_mips
-  pool:
-    vmImage: 'Ubuntu 16.04'
-  variables:
-    DEBUILDER_RELEASE: stretch
-    DEBUILDER_VARIANT: minbase
-    DEBUILDER_ARCH: mips
-    DEBUILDER_QEMU_ARCH: mips
-  steps:
-  - template: debuilder_template.yml
-- job: stretch_mips64el
-  pool:
-    vmImage: 'Ubuntu 16.04'
-  variables:
-    DEBUILDER_RELEASE: stretch
-    DEBUILDER_VARIANT: minbase
-    DEBUILDER_ARCH: mips64el
-    DEBUILDER_QEMU_ARCH: mips64el
-  steps:
-  - template: debuilder_template.yml
-- job: stretch_mipsel
-  pool:
-    vmImage: 'Ubuntu 16.04'
-  variables:
-    DEBUILDER_RELEASE: stretch
-    DEBUILDER_VARIANT: minbase
-    DEBUILDER_ARCH: mipsel
-    DEBUILDER_QEMU_ARCH: mipsel
-  steps:
-  - template: debuilder_template.yml
-- job: stretch_ppc64el
-  pool:
-    vmImage: 'Ubuntu 16.04'
-  variables:
-    DEBUILDER_RELEASE: stretch
-    DEBUILDER_VARIANT: minbase
-    DEBUILDER_ARCH: ppc64el
-    DEBUILDER_QEMU_ARCH: ppc64le
-  steps:
-  - template: debuilder_template.yml
-- job: stretch_s390x
-  pool:
-    vmImage: 'Ubuntu 16.04'
-  variables:
-    DEBUILDER_RELEASE: stretch
-    DEBUILDER_VARIANT: minbase
-    DEBUILDER_ARCH: s390x
-    DEBUILDER_QEMU_ARCH: s390x
-  steps:
-  - template: debuilder_template.yml
-
-
-
-      
+- template: debuilder_template.yml
+  parameters:
+    arch: amd64
+    qemu_arch: x86_64
+#- job: stretch_arm64
+#  pool:
+##   vmImage: 'Ubuntu 16.04'
+#  variables:
+#    DEBUILDER_RELEASE: stretch
+#    DEBUILDER_VARIANT: minbase
+#    DEBUILDER_ARCH: arm64
+#    DEBUILDER_QEMU_ARCH: aarch64
+#  steps:
+#  - template: debuilder_template.yml
+#- job: stretch_armel
+#  pool:
+#   vmImage: 'Ubuntu 16.04'#
+#  variables#:
+#    DEBUILD#ER_RELEASE: stretch
+#    DEBUILDER_VARIANT: minbase
+#    DEBUILDER_ARCH: armel
+#    DEBUILDER_QEMU_ARCH: arm
+#  steps:
+#  - template: debuilder_template.yml
+#- job: stretch_armhf
+#  pool:
+#   vmImage: 'Ubuntu 16.04'
+#  variables:
+#    DEBUILDER_RELEASE: stretch
+#    DEBUILDER_VARIANT: minbase
+#    DEBUILDER_ARCH: armhf
+#    DEBUILDER_QEMU_ARCH: arm
+#  steps:
+#  - template: debuilder_template.yml
+#- job: stretch_i386
+#  pool:
+#    vmImage: 'Ubuntu 16.04'
+#  variables:
+#    DEBUILDER_RELEASE: stretch
+#    DEBUILDER_VARIANT: minbase
+#    DEBUILDER_ARCH: i386
+#    DEBUILDER_QEMU_ARCH: i386
+#  steps:
+#  - template: debuilder_template.yml
+#- job: stretch_mips
+#  pool:
+#    vmImage: 'Ubuntu 16.04'
+#  variables:
+#    DEBUILDER_RELEASE: stretch
+#    DEBUILDER_VARIANT: minbase
+#    DEBUILDER_ARCH: mips
+#    DEBUILDER_QEMU_ARCH: mips
+#  steps:
+#  - template: debuilder_template.yml
+#- job: stretch_mips64el
+#  pool:
+#    vmImage: 'Ubuntu 16.04'
+#  variables:
+#    DEBUILDER_RELEASE: stretch
+#    DEBUILDER_VARIANT: minbase
+#    DEBUILDER_ARCH: mips64el
+#    DEBUILDER_QEMU_ARCH: mips64el
+#  steps:
+#  - template: debuilder_template.yml
+#- job: stretch_mipsel
+#  pool:
+#    vmImage: 'Ubuntu 16.04'
+#  variables:
+#    DEBUILDER_RELEASE: stretch
+#    DEBUILDER_VARIANT: minbase
+#    DEBUILDER_ARCH: mipsel
+#    DEBUILDER_QEMU_ARCH: mipsel
+#  steps:
+#  - template: debuilder_template.yml
+#- job: stretch_ppc64el
+#  pool:
+#    vmImage: 'Ubuntu 16.04'
+#  variables:
+#    DEBUILDER_RELEASE: stretch
+#    DEBUILDER_VARIANT: minbase
+#    DEBUILDER_ARCH: ppc64el
+#    DEBUILDER_QEMU_ARCH: ppc64le
+#  steps:
+#  - template: debuilder_template.yml
+#- job: stretch_s390x
+#  pool:
+#    vmImage: 'Ubuntu 16.04'
+#  variables:
+#    DEBUILDER_RELEASE: stretch
+#    DEBUILDER_VARIANT: minbase
+#    DEBUILDER_ARCH: s390x
+#    DEBUILDER_QEMU_ARCH: s390x
+#  steps:
+#  - template: debuilder_template.yml
