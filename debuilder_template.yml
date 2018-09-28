@@ -3,12 +3,17 @@ parameters:
 
 jobs:
 - job: ${{ parameters.arch }}
+  variables:
+    DEBUILDER_ARCH: ${{ parameters.arch }}
+    DEBUILDER_QEMU_ARCH: ${{ parameters.qemu_arch }}
+    DEBUILDER_VARIANT: minbase
+    DEBUILDER_RELEASE: stretch
   pool:
    vmImage: 'Ubuntu 16.04'
   steps:
   - script: sudo apt-get install -y debootstrap qemu-user-static
     displayName: 'Installing debootstrap and QEMU'
-  - script: sudo debootstrap --foreign --verbose --arch=$ARCH variant=minbase stretch rootfs
+  - script: sudo debootstrap --foreign --verbose --arch=$(DEBUILDER_ARCH) variant=$(DEBUILDER_VARIANT) $(DEBUILDER_RELEASE) rootfs
     displayName: 'Using debootstrap --foreign to create rootfs'
   - script: |
       cd rootfs;
