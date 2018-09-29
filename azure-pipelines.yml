@@ -4,13 +4,12 @@
 # https://aka.ms/yaml
 
 jobs:
-- job: installjq
-  script: sudo apt-get install -y jq
 - job: creategithubdraft
   pool:
     vmImage: 'Ubuntu 16.04'
   steps:
   - script: |
+      sudo apt-get install -y jq;
       export GITHUB_RELEASE_TAG=$(date +%b-%y)
       JSON_DATA="{\"tag_name\": \"$GITHUB_RELEASE_TAG\",\"target_commitish\": \"master\",\"name\": \"$GITHUB_RELEASE_TAG\",\"body\": \"Build as of $GITHUB_RELEASE_TAG\",\"draft\": true, \"prerelease\": false}"
       echo "Pushing:"
