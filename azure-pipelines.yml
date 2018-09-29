@@ -9,21 +9,34 @@ jobs:
     vmImage: 'Ubuntu 16.04'
   steps:
   - script: |
-      sudo apt-get install -y jq;
       export GITHUB_RELEASE_TAG=$(date +%b-%y)
       JSON_DATA="{\"tag_name\": \"$GITHUB_RELEASE_TAG\",\"target_commitish\": \"master\",\"name\": \"$GITHUB_RELEASE_TAG\",\"body\": \"Build as of $GITHUB_RELEASE_TAG\",\"draft\": true, \"prerelease\": false}"
       echo "Pushing:"
       echo $JSON_DATA;
       echo "To:"
       CREATE_RELEASE_URL=https://api.github.com/repos/headmelted/debuilder/releases?access_token=$(GITHUB_PAT)
-      GITHUB_ASSETS_URL_TEMPLATE=$(curl -H "Content-Type: application/json" --data "$JSON_DATA" $CREATE_RELEASE_URL | jq -r ".upload_url")
-      export GITHUB_ASSETS_URL=${GITHUB_ASSETS_URL_TEMPLATE%"{?name,label}"}
+      github_response=$(curl -H "Content-Type: application/json" --data "$JSON_DATA" $CREATE_RELEASE_URL)
+      export GITHUB_RELEASE_ID=$(echo $github_response | jq -r ".id")
+      assets_url_template=$(echo $github_response | jq -r ".upload_url")
+      export GITHUB_ASSETS_URL=${assets_url_template%"{?name,label}"}
+      echo "Release ID: $GITHUB_RELEASE_ID"
       echo "Retrieved assets URL for later: $GITHUB_ASSETS_URL"
   displayName: 'Create Github release'
-#- template: debuilder_template.yml
-#  parameters:
-#    arch: amd64
-#    qemu_arch: x86_64
+- template: debuilder_template.yml
+  parameters:
+    arch: amd64
+    qemu_arch: x86_64
+- job: publishtogithub
+  dependsOn:
+  - amd64
+  steps:
+  - script: |
+      JSON_DATA="{\"tag_name\": \"$GITHUB_RELEASE_TAG\",\"target_commitish\": \"master\",\"name\": \"$GITHUB_RELEASE_TAG\",\"body\": \"Build as of $GITHUB_RELEASE_TAG\",\"draft\": false, \"prerelease\": false}"
+      echo "Pushing:"
+      echo $JSON_DATA;
+      echo "To:"
+      CREATE_RELEASE_URL=https://api.github.com/repos/headmelted/debuilder/releases/$GITHUB_RELEASE_ID?access_token=$(GITHUB_PAT)
+      curl -H "Content-Type: application/json" --data "$JSON_DATA" $CREATE_RELEASE_URL
 #- job
 #- job: stretch_arm64
 #  pool:
