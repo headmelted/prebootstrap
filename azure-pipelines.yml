@@ -16,14 +16,14 @@ jobs:
       echo $JSON_DATA;
       echo "To:"
       CREATE_RELEASE_URL=https://api.github.com/repos/headmelted/debuilder/releases?access_token=$(GITHUB_PAT)
-      curl -H "Content-Type: application/json" --data "$JSON_DATA" $CREATE_RELEASE_URL | jq ".upload_url"
-      GITHUB_DRAFT_RESPONSE=$( curl https://api.github.com/repos/headmelted/debuilder/releases/$GITHUB_RELEASE_TAG?access_token=$(GITHUB_PAT) )
-      echo $GITHUB_DRAFT_RESPONSE
+      export GITHUB_ASSETS_URL=$(curl -H "Content-Type: application/json" --data "$JSON_DATA" $CREATE_RELEASE_URL | jq ".upload_url")
+      echo "Retrieved assets URL for later: $GITHUB_ASSETS_URL"
   displayName: 'Create Github release'
 - template: debuilder_template.yml
   parameters:
     arch: amd64
     qemu_arch: x86_64
+- job
 #- job: stretch_arm64
 #  pool:
 ##   vmImage: 'Ubuntu 16.04'
