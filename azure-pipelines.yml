@@ -10,7 +10,7 @@ jobs:
   steps:
   - script: |
       export GITHUB_RELEASE_TAG=$(date +%b-%y)
-      JSON_DATA="{tag_name: \"$GITHUB_RELEASE_TAG\",target_commitish: master,name: \"$GITHUB_RELEASE_TAG\",body: \"Build as of $GITHUB_RELEASE_TAG\",draft: true,prerelease: false}"
+      JSON_DATA="{\"tag_name\": \"$GITHUB_RELEASE_TAG\",\"target_commitish\": \"master\",\"name\": \"$GITHUB_RELEASE_TAG\",\"body\": \"Build as of $GITHUB_RELEASE_TAG\",\"draft\": true, \"prerelease\": false}"
       echo "Pushing:"
       echo $JSON_DATA;
       echo "To:"
