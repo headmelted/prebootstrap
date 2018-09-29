@@ -10,7 +10,7 @@ jobs:
   steps:
   - script: |
       export GITHUB_RELEASE_TAG=$(date +%b-%y)
-      API_JSON='{"tag_name": $GITHUB_RELEASE_TAG,"target_commitish": "master","name": $GITHUB_RELEASE_TAG,"body": "Build as of $GITHUB_RELEASE_TAG","draft": true,"prerelease": false}'
+      API_JSON="{\"tag_name\": $GITHUB_RELEASE_TAG,\"target_commitish\": \"master\",\"name\": $GITHUB_RELEASE_TAG,\"body\": \"Build as of $GITHUB_RELEASE_TAG\",\"draft\": true,\"prerelease\": false}"
       echo $API_JSON;
       curl --data "$API_JSON" https://api.github.com/repos/headmelted/debuilder/releases?access_token=$GITHUB_PAT
       GITHUB_DRAFT_RESPONSE=$( curl https://api.github.com/repos/headmelted/debuilder/releases/$VERSION?access_token=$GITHUB_PAT )
