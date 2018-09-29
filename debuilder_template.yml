@@ -1,25 +1,34 @@
-steps:
-- script: sudo apt-get install -y debootstrap qemu-user-static
-  displayName: 'Installing debootstrap and QEMU'
-- script: sudo debootstrap --foreign --verbose --arch=$(DEBUILDER_ARCH) --variant=$(DEBUILDER_VARIANT) $(DEBUILDER_RELEASE) rootfs
-  displayName: 'Using debootstrap --foreign to create rootfs'
-- script: |
-    cd rootfs;
-    sudo mount --bind /dev dev/
-    sudo mount --bind /sys sys/
-    sudo mount --bind /proc proc/
-    sudo mount --bind /dev/pts dev/pts/
-    cd ..;
-  displayName: Entering chroot to mount dev, sys, proc and dev/pts
-- script: sudo chmod +x rootfs/usr/bin/qemu-$(DEBUILDER_QEMU_ARCH)-static
-  displayName: Marking static [rootfs/usr/bin/qemu-$(DEBUILDER_QEMU_ARCH)-static] as executable
-- script: ls rootfs
-  displayName: listing rootfs
-- script: sudo chroot rootfs /debootstrap/debootstrap --second-stage --verbose
-  displayName: Manually setting up debootstrap
-- script: sudo rm rootfs/usr/bin/qemu-$(DEBUILDER_QEMU_ARCH)-static
-  displayName: Deleting QEMU from chroot
-- script: sudo chroot rootfs /debootstrap/debootstrap --second-stage --verbose
-  displayName: Manually setting up debootstrap
-- script: sudo tar -zcvf $(Build.BinariesDirectory)/debuilder_rootfs_$(DEBUILDER_RELEASE)_$(DEBUILDER_VARIANT)_$(DEBUILDER_ARCH).tar.gz rootfs
-  displayName: 'Compressing rootfs for $(DEBUILDER_RELEASE) $(DEBUILDER_VARIANT) $(DEBUILDER_ARCH)'
+jobs:
+- job: ${{ parameters.arch }}
+  pool:
+    vmImage: 'Ubuntu 16.04'
+  variables:
+    DEBUILDER_ARCH: ${{ parameters.arch }}
+    DEBUILDER_QEMU_ARCH: ${{ parameters.qemu_arch }}
+    DEBUILDER_RELEASE: stretch
+    DEBUILDER_VARIANT: minbase
+  steps:
+  - script: sudo apt-get install -y debootstrap qemu-user-static
+    displayName: 'Installing debootstrap and QEMU'
+  - script: sudo debootstrap --foreign --verbose --arch=$(DEBUILDER_ARCH) --variant=$(DEBUILDER_VARIANT) $(DEBUILDER_RELEASE) rootfs
+    displayName: 'Using debootstrap --foreign to create rootfs'
+  - script: |
+      cd rootfs;
+      sudo mount --bind /dev dev/
+      sudo mount --bind /sys sys/
+      sudo mount --bind /proc proc/
+      sudo mount --bind /dev/pts dev/pts/
+      cd ..;
+    displayName: Entering chroot to mount dev, sys, proc and dev/pts
+  - script: sudo chmod +x rootfs/usr/bin/qemu-$(DEBUILDER_QEMU_ARCH)-static
+    displayName: Marking static [rootfs/usr/bin/qemu-$(DEBUILDER_QEMU_ARCH)-static] as executable
+  - script: ls rootfs
+    displayName: listing rootfs
+  - script: sudo chroot rootfs /debootstrap/debootstrap --second-stage --verbose
+    displayName: Manually setting up debootstrap
+  - script: sudo rm rootfs/usr/bin/qemu-$(DEBUILDER_QEMU_ARCH)-static
+    displayName: Deleting QEMU from chroot
+  - script: sudo chroot rootfs /debootstrap/debootstrap --second-stage --verbose
+    displayName: Manually setting up debootstrap
+  - script: sudo tar -zcvf $(Build.BinariesDirectory)/debuilder_rootfs_$(DEBUILDER_RELEASE)_$(DEBUILDER_VARIANT)_$(DEBUILDER_ARCH).tar.gz rootfs
+    displayName: 'Compressing rootfs for $(DEBUILDER_RELEASE) $(DEBUILDER_VARIANT) $(DEBUILDER_ARCH)'
