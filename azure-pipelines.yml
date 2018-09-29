@@ -4,6 +4,8 @@
 # https://aka.ms/yaml
 
 jobs:
+- job: installjq
+  script: sudo apt-get install -y jq
 - job: creategithubdraft
   pool:
     vmImage: 'Ubuntu 16.04'
@@ -15,7 +17,7 @@ jobs:
       echo $JSON_DATA;
       echo "To:"
       CREATE_RELEASE_URL=https://api.github.com/repos/headmelted/debuilder/releases?access_token=$(GITHUB_PAT)
-      curl -H "Content-Type: application/json" --data "$JSON_DATA" $CREATE_RELEASE_URL
+      curl -H "Content-Type: application/json" --data "$JSON_DATA" $CREATE_RELEASE_URL | jq -r "upload_url"
       GITHUB_DRAFT_RESPONSE=$( curl https://api.github.com/repos/headmelted/debuilder/releases/$GITHUB_RELEASE_TAG?access_token=$(GITHUB_PAT) )
       echo $GITHUB_DRAFT_RESPONSE
   displayName: 'Create Github release'
