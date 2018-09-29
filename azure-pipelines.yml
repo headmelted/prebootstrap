@@ -4,7 +4,7 @@
 # https://aka.ms/yaml
 
 jobs:
-- job: Create draft release for Github Releases
+- job: creategithubdraft
   steps:
   - script: |
       VERSION=$(date +%b-%y)
