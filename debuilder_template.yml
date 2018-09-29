@@ -20,6 +20,8 @@ jobs:
       sudo mount --bind /dev/pts dev/pts/
       cd ..;
     displayName: Entering chroot to mount dev, sys, proc and dev/pts
+  - script: sudo cp /usr/bin/qemu-$(DEBUILDER_QEMU_ARCH)-static rootfs/usr/bin/;
+    displayName: Copy static QEMU to rootfs
   - script: sudo chmod +x rootfs/usr/bin/qemu-$(DEBUILDER_QEMU_ARCH)-static
     displayName: Marking static [rootfs/usr/bin/qemu-$(DEBUILDER_QEMU_ARCH)-static] as executable
   - script: ls rootfs
