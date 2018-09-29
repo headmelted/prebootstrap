@@ -32,8 +32,5 @@ jobs:
     displayName: Deleting QEMU from chroot
   - script: sudo tar -zcvf debuilder_rootfs_$(DEBUILDER_RELEASE)_$(DEBUILDER_VARIANT)_$(DEBUILDER_ARCH).tar.gz rootfs
     displayName: 'Compressing rootfs for $(DEBUILDER_RELEASE) $(DEBUILDER_VARIANT) $(DEBUILDER_ARCH)'
-  - script: |
-      VERSION=$(date +%b-%y)
-      API_JSON=$(printf '{"tag_name": "%s","target_commitish": "master","name": "%s","body": "Build as of %s","draft": false,"prerelease": false}' $VERSION $VERSION $VERSION)
-      curl --data "$API_JSON" https://api.github.com/repos/headmelted/debuilder/releases?access_token=$GITHUB_PAT
+  - script: curl -F ‘data=$(pwd)/debuilder_rootfs_$(DEBUILDER_RELEASE)_$(DEBUILDER_VARIANT)_$(DEBUILDER_ARCH).tar.gz’ 
     displayName: 'Pushing to Github releases'
