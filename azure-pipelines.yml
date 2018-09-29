@@ -5,7 +5,7 @@
 
 jobs:
 - job: Create draft release for Github Releases
-  - script: |
+  script: |
     VERSION=$(date +%b-%y)
     API_JSON=$(printf '{"tag_name": "%s","target_commitish": "master","name": "%s","body": "Build as of %s","draft": true,"prerelease": false}' $VERSION $VERSION $VERSION)
     curl --data "$API_JSON" https://api.github.com/repos/headmelted/debuilder/releases?access_token=$GITHUB_PAT
