@@ -17,7 +17,7 @@ jobs:
       echo "To:"
       CREATE_RELEASE_URL=https://api.github.com/repos/headmelted/debuilder/releases?access_token=$(GITHUB_PAT)
       GITHUB_ASSETS_URL_TEMPLATE=$(curl -H "Content-Type: application/json" --data "$JSON_DATA" $CREATE_RELEASE_URL | jq -r ".upload_url")
-      export GITHUB_ASSETS_URL=${GITHUB_ASSETS_URL_TEMPLATE/\?\{name,label\}/}
+      export GITHUB_ASSETS_URL=${GITHUB_ASSETS_URL_TEMPLATE%"{?name,label}"}
       echo "Retrieved assets URL for later: $GITHUB_ASSETS_URL"
   displayName: 'Create Github release'
 #- template: debuilder_template.yml
