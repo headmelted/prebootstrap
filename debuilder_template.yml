@@ -8,7 +8,7 @@ jobs:
     DEBUILDER_QEMU_ARCH: ${{ parameters.qemu_arch }}
     DEBUILDER_RELEASE: stretch
     DEBUILDER_VARIANT: minbase
-    GITHUB_ASSETS_URL: $(GITHUB_ASSETS_URL)
+    GITHUB_ASSETS_URL: ${{ parameters.github_assets_url }}
   steps:
   - script: sudo apt-get install -y debootstrap qemu-user-static
     displayName: 'Installing debootstrap and QEMU'
