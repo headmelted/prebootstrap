@@ -30,5 +30,11 @@ jobs:
     displayName: Manually setting up debootstrap
   - script: sudo rm rootfs/usr/bin/qemu-$(DEBUILDER_QEMU_ARCH)-static
     displayName: Deleting QEMU from chroot
-  - script: sudo tar -zcvf $(Build.BinariesDirectory)/debuilder_rootfs_$(DEBUILDER_RELEASE)_$(DEBUILDER_VARIANT)_$(DEBUILDER_ARCH).tar.gz rootfs
+  - script: sudo tar -zcvf debuilder_rootfs_$(DEBUILDER_RELEASE)_$(DEBUILDER_VARIANT)_$(DEBUILDER_ARCH).tar.gz rootfs
     displayName: 'Compressing rootfs for $(DEBUILDER_RELEASE) $(DEBUILDER_VARIANT) $(DEBUILDER_ARCH)'
+  - task: PublishBuildArtifacts@1
+    displayName: Publish artifact
+    inputs:
+      pathToPublish: debuilder_rootfs_$(DEBUILDER_RELEASE)_$(DEBUILDER_VARIANT)_$(DEBUILDER_ARCH).tar.gz
+      artifactName: debuilder_rootfs_$(DEBUILDER_RELEASE)_$(DEBUILDER_VARIANT)_$(DEBUILDER_ARCH)
+      artifactType: tarball
