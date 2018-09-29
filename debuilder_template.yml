@@ -30,7 +30,5 @@ jobs:
     displayName: Manually setting up debootstrap
   - script: sudo rm rootfs/usr/bin/qemu-$(DEBUILDER_QEMU_ARCH)-static
     displayName: Deleting QEMU from chroot
-  - script: sudo chroot rootfs /debootstrap/debootstrap --second-stage --verbose
-    displayName: Manually setting up debootstrap
   - script: sudo tar -zcvf $(Build.BinariesDirectory)/debuilder_rootfs_$(DEBUILDER_RELEASE)_$(DEBUILDER_VARIANT)_$(DEBUILDER_ARCH).tar.gz rootfs
     displayName: 'Compressing rootfs for $(DEBUILDER_RELEASE) $(DEBUILDER_VARIANT) $(DEBUILDER_ARCH)'
