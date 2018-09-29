@@ -4,6 +4,12 @@
 # https://aka.ms/yaml
 
 jobs:
+- job: Create draft release for Github Releases
+  - script: |
+    VERSION=$(date +%b-%y)
+    API_JSON=$(printf '{"tag_name": "%s","target_commitish": "master","name": "%s","body": "Build as of %s","draft": true,"prerelease": false}' $VERSION $VERSION $VERSION)
+    curl --data "$API_JSON" https://api.github.com/repos/headmelted/debuilder/releases?access_token=$GITHUB_PAT
+  displayName: 'Create Github release'
 - template: debuilder_template.yml
   parameters:
     arch: amd64
