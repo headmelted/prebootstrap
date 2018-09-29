@@ -26,7 +26,6 @@ jobs:
   parameters:
     arch: amd64
     qemu_arch: x86_64
-    github_assets_url: $(GITHUB_ASSETS_URL)
 - job: publishtogithub
   dependsOn:
   - amd64
