@@ -7,11 +7,11 @@ jobs:
 - job: creategithubdraft
   steps:
   - script: |
-      VERSION=$(date +%b-%y)
-      API_JSON=$(printf '{"tag_name": "%s","target_commitish": "master","name": "%s","body": "Build as of %s","draft": true,"prerelease": false}' $VERSION $VERSION $VERSION)
+      export RELEASE_TAG=$(date +%b-%y)
+      export API_JSON=$(printf '{"tag_name": "%s","target_commitish": "master","name": "%s","body": "Build as of %s","draft": true,"prerelease": false}' $RELEASE_TAG $RELEASE_TAG $RELEASE_TAG)
       curl --data "$API_JSON" https://api.github.com/repos/headmelted/debuilder/releases?access_token=$GITHUB_PAT
-      RESPONSE=$( curl https://api.github.com/repos/headmelted/debuilder/releases/$VERSION?access_token=$GITHUB_PAT )
-      echo $RESPONSE
+      export GITHUB_DRAFT_RESPONSE=$( curl https://api.github.com/repos/headmelted/debuilder/releases/$VERSION?access_token=$GITHUB_PAT )
+      echo $GITHUB_DRAFT_RESPONSE
   displayName: 'Create Github release'
 - template: debuilder_template.yml
   parameters:
