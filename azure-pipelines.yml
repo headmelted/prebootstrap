@@ -4,7 +4,7 @@
 # https://aka.ms/yaml
 
 jobs:
-- template: debuilder_template.yml
+- template: debootstrap_architecture_template.yml
   parameters:
     arch: amd64
     qemu_arch: x86_64
