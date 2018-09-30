@@ -30,7 +30,7 @@ jobs:
     displayName: Manually setting up debootstrap
   - script: sudo rm rootfs/usr/bin/qemu-$(PREBOOTSTRAP_QEMU_ARCH)-static
     displayName: Deleting QEMU from chroot
-  - script: sudo tar -zcvf $(Build.ArtifactStagingDirectory)/debuilder_rootfs_$(PREBOOTSTRAP_RELEASE)_$(PREBOOTSTRAP_VARIANT)_$(PREBOOTSTRAP_ARCH).tar.gz rootfs
+  - script: sudo tar -C rootfs -zcvf $(Build.ArtifactStagingDirectory)/prebuilder_$(PREBOOTSTRAP_RELEASE)_$(PREBOOTSTRAP_VARIANT)_$(PREBOOTSTRAP_ARCH)_rootfs.tar.gz *
     displayName: 'Compressing rootfs for $(PREBOOTSTRAP_RELEASE) $(PREBOOTSTRAP_VARIANT) $(PREBOOTSTRAP_ARCH)'
   - task: PublishBuildArtifacts@1
   
