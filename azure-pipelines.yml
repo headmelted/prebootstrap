@@ -3,6 +3,10 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
+variables:
+  GITHUB_RELEASE_TAG: ''
+  GITHUB_ASSETS_URL: ''
+
 jobs:
 - job: creategithubdraft
   pool:
