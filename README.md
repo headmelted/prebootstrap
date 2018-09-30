@@ -1,4 +1,5 @@
 # prebootstrap
+[![Build Status](https://dev.azure.com/headmelted/headmelted_on_github/_apis/build/status/headmelted.prebootstrap)](https://dev.azure.com/headmelted/headmelted_on_github/_build/latest?definitionId=8)
 This repository periodically (currently once per month) creates a Debian Stretch minimal root filesystem for every architecture that Debian supports (by calling *debootstrap*). I'm currently using these for multi-arch builds on Azure Pipelines (where the packaging takes place), but they should be useful for most scenarios requiring root filesystems for multiple architectures.
 
 ## Why make this?
