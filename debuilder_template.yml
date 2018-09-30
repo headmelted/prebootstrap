@@ -8,7 +8,6 @@ jobs:
     DEBUILDER_QEMU_ARCH: ${{ parameters.qemu_arch }}
     DEBUILDER_RELEASE: stretch
     DEBUILDER_VARIANT: minbase
-    DEBUILDER_ASSETS_URL: ${{ parameters.assets_url }}
   steps:
   - script: sudo apt-get install -y debootstrap qemu-user-static
     displayName: 'Installing debootstrap and QEMU'
@@ -32,7 +31,6 @@ jobs:
     displayName: Manually setting up debootstrap
   - script: sudo rm rootfs/usr/bin/qemu-$(DEBUILDER_QEMU_ARCH)-static
     displayName: Deleting QEMU from chroot
-  - script: sudo tar -zcvf debuilder_rootfs_$(DEBUILDER_RELEASE)_$(DEBUILDER_VARIANT)_$(DEBUILDER_ARCH).tar.gz rootfs
+  - script: sudo tar -zcvf $(Build.ArtifactStagingDirectory)/debuilder_rootfs_$(DEBUILDER_RELEASE)_$(DEBUILDER_VARIANT)_$(DEBUILDER_ARCH).tar.gz rootfs
     displayName: 'Compressing rootfs for $(DEBUILDER_RELEASE) $(DEBUILDER_VARIANT) $(DEBUILDER_ARCH)'
-  - script: curl -F 'data=$(pwd)/debuilder_rootfs_$(DEBUILDER_RELEASE)_$(DEBUILDER_VARIANT)_$(DEBUILDER_ARCH).tar.gz' $(DEBUILDER_ASSETS_URL)
-    displayName: 'Pushing to Github releases'
+
