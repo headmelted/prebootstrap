@@ -8,4 +8,4 @@ It's relatively easy to find root filesystems for most Linux distributions on th
 prebootstrap uses QEMU and debootstrap's *foreign* and *second-stage* options to fully setup the filesystem, which is then tarballed and tagged to a release for that month on Github (the release tab above).  This should make it easy to lock versions to a filesystem for a specific month.  To download a filesystem with a more recent set of packages just change the month and year in your scripts.
 
 ## Naming conventions
-The releases tab holds the downloads, which are tagged and named in the format prebootstrap_<release>_<variant>_<architecture>_rootfs.tar.gz. As an example, a Debian Stretch minbase armhf root filesystem would be named prebootstrap_stretch_minbase_armhf_rootfs.tar.gz.
+The releases tab holds the downloads, which are tagged and named in the format prebootstrap_***release***_***variant***_***architecture***_rootfs.tar.gz. As an example, a Debian Stretch minbase armhf root filesystem would be named prebootstrap_stretch_minbase_armhf_rootfs.tar.gz.
