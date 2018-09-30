@@ -1,0 +1,3 @@
+The contents of these archives are covered by several licenses, more details of which can be found online at https://www.debian.org/legal/licenses/.
+
+Each installed package within the filesystem is subject to any license included within it's installation directory. Commonly such license terms are included in a file named simply **copyright**.
