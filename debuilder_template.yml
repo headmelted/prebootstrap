@@ -1,6 +1,5 @@
 jobs:
 - job: ${{ parameters.arch }}
-  dependsOn: creategithubdraft
   pool:
     vmImage: 'Ubuntu 16.04'
   variables:
