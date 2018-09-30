@@ -32,4 +32,5 @@ jobs:
     displayName: Deleting QEMU from chroot
   - script: sudo tar -zcvf $(Build.ArtifactStagingDirectory)/debuilder_rootfs_$(DEBUILDER_RELEASE)_$(DEBUILDER_VARIANT)_$(DEBUILDER_ARCH).tar.gz rootfs
     displayName: 'Compressing rootfs for $(DEBUILDER_RELEASE) $(DEBUILDER_VARIANT) $(DEBUILDER_ARCH)'
-
+  - task: PublishBuildArtifacts@1
+  
