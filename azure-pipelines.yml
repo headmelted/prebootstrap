@@ -36,10 +36,10 @@ jobs:
   parameters:
     arch: mipsel
     qemu_arch: mipsel
-- template: debootstrap_architecture_template.yml
-  parameters:
-    arch: ppc64el
-    qemu_arch: ppc64le
+#- template: debootstrap_architecture_template.yml   # debootstrap having trouble with ppc64le, will restore later
+#  parameters:
+#    arch: ppc64el
+#    qemu_arch: ppc64le
 - template: debootstrap_architecture_template.yml
   parameters:
     arch: s390x
