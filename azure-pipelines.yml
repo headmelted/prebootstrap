@@ -8,126 +8,39 @@ jobs:
   parameters:
     arch: amd64
     qemu_arch: x86_64
-#- job: publishtogithub
-#  pool:
-#    vmImage: 'Ubuntu 16.04'
-#  dependsOn:
-#  - amd64
-#  steps:
-#  - script: |
-#      export GITHUB_RELEASE_TAG=$(date +%b-%y)
-#      JSON_DATA="{\"tag_name\": \"$GITHUB_RELEASE_TAG\",\"target_commitish\": \"master\",\"name\": \"$GITHUB_RELEASE_TAG\",\"body\": \"Build as of $GITHUB_RELEASE_TAG\",\"draft\": true, \"prerelease\": false}"
-#      echo "Pushing:"
-#      echo $JSON_DATA;
-#      echo "To:"
-#      CREATE_RELEASE_URL=https://api.github.com/repos/headmelted/debuilder/releases?access_token=$(GITHUB_PAT)
-#      github_response=$(curl -H "Content-Type: application/json" --data "$JSON_DATA" $CREATE_RELEASE_URL)
-#      GITHUB_RELEASE_ID=$(echo $github_response | jq -r ".id")
-#      assets_url_template=$(echo $github_response | jq -r ".upload_url")
-#      GITHUB_ASSETS_URL=${assets_url_template%"{?name,label}"}
-#      echo "Release ID: $GITHUB_RELEASE_ID"
-#      echo "Retrieved assets URL for later: $GITHUB_ASSETS_URL"
-#      echo "Listing assets to upload:"
-#      ls $(Build.ArtifactStagingDirectory)
-#      for filename in $(Build.ArtifactStagingDirectory)/*.tar.gz
-#      do
-#        echo "Uploading [$filename] to Github release [$GITHUB_RELEASE_ID]";
-#        curl -H "Content-Type: application/gzip" -F "$filename" $GITHUB_ASSETS_URL
-#      done
-#      JSON_DATA="{\"tag_name\": \"$GITHUB_RELEASE_TAG\",\"target_commitish\": \"master\",\"name\": \"$GITHUB_RELEASE_TAG\",\"body\": \"Build as of $GITHUB_RELEASE_TAG\",\"draft\": false, \"prerelease\": false}"
-#      echo "Pushing:"
-#      echo $JSON_DATA;
-#      echo "To:"
-#      CREATE_RELEASE_URL=https://api.github.com/repos/headmelted/debuilder/releases/$GITHUB_RELEASE_ID?access_token=$(GITHUB_PAT)
-#      curl -H "Content-Type: application/json" --data "$JSON_DATA" $CREATE_RELEASE_URL
-#- job
-#- job: stretch_arm64
-#  pool:
-##   vmImage: 'Ubuntu 16.04'
-#  variables:
-#    DEBUILDER_RELEASE: stretch
-#    DEBUILDER_VARIANT: minbase
-#    DEBUILDER_ARCH: arm64
-#    DEBUILDER_QEMU_ARCH: aarch64
-#  steps:
-#  - template: debuilder_template.yml
-#- job: stretch_armel
-#  pool:
-#   vmImage: 'Ubuntu 16.04'#
-#  variables#:
-#    DEBUILD#ER_RELEASE: stretch
-#    DEBUILDER_VARIANT: minbase
-#    DEBUILDER_ARCH: armel
-#    DEBUILDER_QEMU_ARCH: arm
-#  steps:
-#  - template: debuilder_template.yml
-#- job: stretch_armhf
-#  pool:
-#   vmImage: 'Ubuntu 16.04'
-#  variables:
-#    DEBUILDER_RELEASE: stretch
-#    DEBUILDER_VARIANT: minbase
-#    DEBUILDER_ARCH: armhf
-#    DEBUILDER_QEMU_ARCH: arm
-#  steps:
-#  - template: debuilder_template.yml
-#- job: stretch_i386
-#  pool:
-#    vmImage: 'Ubuntu 16.04'
-#  variables:
-#    DEBUILDER_RELEASE: stretch
-#    DEBUILDER_VARIANT: minbase
-#    DEBUILDER_ARCH: i386
-#    DEBUILDER_QEMU_ARCH: i386
-#  steps:
-#  - template: debuilder_template.yml
-#- job: stretch_mips
-#  pool:
-#    vmImage: 'Ubuntu 16.04'
-#  variables:
-#    DEBUILDER_RELEASE: stretch
-#    DEBUILDER_VARIANT: minbase
-#    DEBUILDER_ARCH: mips
-#    DEBUILDER_QEMU_ARCH: mips
-#  steps:
-#  - template: debuilder_template.yml
-#- job: stretch_mips64el
-#  pool:
-#    vmImage: 'Ubuntu 16.04'
-#  variables:
-#    DEBUILDER_RELEASE: stretch
-#    DEBUILDER_VARIANT: minbase
-#    DEBUILDER_ARCH: mips64el
-#    DEBUILDER_QEMU_ARCH: mips64el
-#  steps:
-#  - template: debuilder_template.yml
-#- job: stretch_mipsel
-#  pool:
-#    vmImage: 'Ubuntu 16.04'
-#  variables:
-#    DEBUILDER_RELEASE: stretch
-#    DEBUILDER_VARIANT: minbase
-#    DEBUILDER_ARCH: mipsel
-#    DEBUILDER_QEMU_ARCH: mipsel
-#  steps:
-#  - template: debuilder_template.yml
-#- job: stretch_ppc64el
-#  pool:
-#    vmImage: 'Ubuntu 16.04'
-#  variables:
-#    DEBUILDER_RELEASE: stretch
-#    DEBUILDER_VARIANT: minbase
-#    DEBUILDER_ARCH: ppc64el
-#    DEBUILDER_QEMU_ARCH: ppc64le
-#  steps:
-#  - template: debuilder_template.yml
-#- job: stretch_s390x
-#  pool:
-#    vmImage: 'Ubuntu 16.04'
-#  variables:
-#    DEBUILDER_RELEASE: stretch
-#    DEBUILDER_VARIANT: minbase
-#    DEBUILDER_ARCH: s390x
-#    DEBUILDER_QEMU_ARCH: s390x
-#  steps:
-#  - template: debuilder_template.yml
+- template: debootstrap_architecture_template.yml
+  parameters:
+    arch: arm64
+    qemu_arch: aarch64
+- template: debootstrap_architecture_template.yml
+  parameters:
+    arch: armel
+    qemu_arch: arm
+- template: debootstrap_architecture_template.yml
+  parameters:
+    arch: armhf
+    qemu_arch: arm
+- template: debootstrap_architecture_template.yml
+  parameters:
+    arch: i386
+    qemu_arch: i386
+- template: debootstrap_architecture_template.yml
+  parameters:
+    arch: mips
+    qemu_arch: mips
+- template: debootstrap_architecture_template.yml
+  parameters:
+    arch: mips64el
+    qemu_arch: mips64el
+- template: debootstrap_architecture_template.yml
+  parameters:
+    arch: mipsel
+    qemu_arch: mipsel
+- template: debootstrap_architecture_template.yml
+  parameters:
+    arch: ppc64el
+    qemu_arch: ppc64le
+- template: debootstrap_architecture_template.yml
+  parameters:
+    arch: s390x
+    qemu_arch: s390x
