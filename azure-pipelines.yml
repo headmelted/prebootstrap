@@ -14,6 +14,7 @@ jobs:
   dependsOn:
   - amd64
   steps:
+  - task: PublishBuildArtifacts@1
   - script: |
       export GITHUB_RELEASE_TAG=$(date +%b-%y)
       JSON_DATA="{\"tag_name\": \"$GITHUB_RELEASE_TAG\",\"target_commitish\": \"master\",\"name\": \"$GITHUB_RELEASE_TAG\",\"body\": \"Build as of $GITHUB_RELEASE_TAG\",\"draft\": true, \"prerelease\": false}"
