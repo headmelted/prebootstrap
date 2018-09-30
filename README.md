@@ -1,5 +1,5 @@
 # debuilder
-This repository periodically (currently once per month) creates a Debian Stretch minimal root filesystem by calling **debootstrap** for every architecture that Debian supports. *I'm currently using these for multi-arch builds on Azure Pipelines, but they should be useful for most scenarios requiring root filesystems for multiple architectures.*
+This repository periodically (currently once per month) creates a Debian Stretch minimal root filesystem by calling **debootstrap** for every architecture that Debian supports. I'm currently using these for multi-arch builds on Azure Pipelines, but they should be useful for most scenarios requiring root filesystems for multiple architectures.
 
 ## Why make this?
 It's relatively easy to find root filesystems for most Linux distributions on the internet, including Ubuntu (who make official releases of root filesystems for datacenter use).  I prefer working with Debian as I find there is much better coverage of different architectures, and I've found the package naming to be more consistent.  As I was unable to find downloaded root filesystem tarballs on the internet, I decided to build some for my own use (but hopefully they're useful to you too!).
