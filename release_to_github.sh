@@ -1,4 +1,4 @@
-#!/bin/bash#!/bin/bash
+#!/bin/bash
 sudo apt-get install -y jq;
 export GITHUB_RELEASE_TAG=$(date +%b-%y);
 JSON_DATA="{\"tag_name\": \"$GITHUB_RELEASE_TAG\",\"target_commitish\": \"master\",\"name\": \"$GITHUB_RELEASE_TAG\",\"body\": \"Build as of $GITHUB_RELEASE_TAG\",\"draft\": true, \"prerelease\": false}";
