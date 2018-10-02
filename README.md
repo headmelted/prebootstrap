@@ -1,6 +1,6 @@
 # prebootstrap
-[![GitHub Stars](https://img.shields.io/github/stars/headmelted/cobbler.svg)](https://github.com/headmelted/cobbler/stargazers)
-[![GitHub Watchers](https://img.shields.io/github/watchers/headmelted/cobbler.svg)](https://github.com/headmelted/cobbler/watchers)
+[![GitHub Stars](https://img.shields.io/github/stars/headmelted/prebootstrap.svg)](https://github.com/headmelted/prebootstrap/stargazers)
+[![GitHub Watchers](https://img.shields.io/github/watchers/headmelted/prebootstrap.svg)](https://github.com/headmelted/prebootstrap/watchers)
 [![Build Status](https://dev.azure.com/headmelted/headmelted_on_github/_apis/build/status/headmelted.prebootstrap)](https://dev.azure.com/headmelted/headmelted_on_github/_build/latest?definitionId=8)
 
 This repository periodically (currently once per month) creates a Debian Stretch minimal root filesystem for every architecture that Debian supports (by calling *debootstrap*). I'm currently using these for multi-arch builds on Azure Pipelines (where the packaging takes place), but they should be useful for most scenarios requiring root filesystems for multiple architectures.
