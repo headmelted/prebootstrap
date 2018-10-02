@@ -20,17 +20,17 @@ jobs:
       sudo mount --bind /dev/pts dev/pts/
       cd ..;
     displayName: Entering chroot to mount dev, sys, proc and dev/pts
-  - script: cp /usr/bin/qemu-$(PREBOOTSTRAP_QEMU_ARCH)-static rootfs/usr/bin/;
+  - script: sudo cp /usr/bin/qemu-$(PREBOOTSTRAP_QEMU_ARCH)-static rootfs/usr/bin/;
     displayName: Copy static QEMU to rootfs
-  - script: chmod +x rootfs/usr/bin/qemu-$(PREBOOTSTRAP_QEMU_ARCH)-static
+  - script: sudo chmod +x rootfs/usr/bin/qemu-$(PREBOOTSTRAP_QEMU_ARCH)-static
     displayName: Marking static [rootfs/usr/bin/qemu-$(PREBOOTSTRAP_QEMU_ARCH)-static] as executable
   - script: ls rootfs
     displayName: listing rootfs
-  - script: chroot rootfs /debootstrap/debootstrap --second-stage --verbose
+  - script: sudo chroot rootfs /debootstrap/debootstrap --second-stage --verbose
     displayName: Manually setting up debootstrap
-  - script: rm rootfs/usr/bin/qemu-$(PREBOOTSTRAP_QEMU_ARCH)-static
+  - script: sudo rm rootfs/usr/bin/qemu-$(PREBOOTSTRAP_QEMU_ARCH)-static
     displayName: Deleting QEMU from chroot
-  - script: cd rootfs && tar -zcvf $(Build.ArtifactStagingDirectory)/prebootstrap_$(PREBOOTSTRAP_RELEASE)_$(PREBOOTSTRAP_VARIANT)_$(PREBOOTSTRAP_ARCH)_rootfs.tar.gz *
+  - script: cd rootfs && sudo tar -zcvf $(Build.ArtifactStagingDirectory)/prebootstrap_$(PREBOOTSTRAP_RELEASE)_$(PREBOOTSTRAP_VARIANT)_$(PREBOOTSTRAP_ARCH)_rootfs.tar.gz *
     displayName: 'Compressing rootfs for $(PREBOOTSTRAP_RELEASE) $(PREBOOTSTRAP_VARIANT) $(PREBOOTSTRAP_ARCH)'
   - task: PublishBuildArtifacts@1
   
