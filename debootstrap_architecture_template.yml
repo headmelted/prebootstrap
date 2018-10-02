@@ -10,7 +10,7 @@ jobs:
   steps:
   - script: sudo apt-get install -y debootstrap qemu-user-static
     displayName: 'Installing debootstrap and QEMU'
-  - script: debootstrap --foreign --verbose --arch=$(PREBOOTSTRAP_ARCH) --variant=$(PREBOOTSTRAP_VARIANT) $(PREBOOTSTRAP_RELEASE) rootfs
+  - script: sudo debootstrap --foreign --verbose --arch=$(PREBOOTSTRAP_ARCH) --variant=$(PREBOOTSTRAP_VARIANT) $(PREBOOTSTRAP_RELEASE) rootfs
     displayName: 'Using debootstrap --foreign to create rootfs'
   - script: |
       cd rootfs;
